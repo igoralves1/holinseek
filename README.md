@@ -217,6 +217,30 @@ docs/             site publicado em GitHub Pages
 
 ---
 
+## Aplicação em bactérias orais
+
+Há uma revisão de literatura dedicada a cárie e doença periodontal no site:
+**[Saúde bucal](https://igoralves1.github.io/holinseek/saude-bucal.html)**.
+
+O resumo, porque o resultado é mais sóbrio do que a ideia sugere:
+
+- **Endolisinas contra *Streptococcus mutans* têm base real.** ClyR e LysP53
+  mostram atividade seletiva em biofilme, e LysP53 foi comparado à
+  clorexidina a 0,12% em camundongos. É Gram-positiva: o peptidoglicano está
+  exposto, e a enzima aplicada de fora alcança o substrato.
+- **Periodontia é mais difícil.** *P. gingivalis*, *A. actinomycetemcomitans*,
+  *F. nucleatum* e *T. denticola* são Gram-negativas. A membrana externa
+  bloqueia enzimas líticas aplicadas topicamente.
+- **Holina como princípio ativo ainda não se sustenta.** A evidência de
+  holina aplicada externamente é de 2025, escassa e contraditória — um
+  trabalho relata atividade isolada sem sinergia, outro relata o oposto — e
+  os números vêm de preparação bruta, não de proteína purificada.
+- **A contribuição do pipeline é o cassete inteiro.** O fago M102, de
+  *S. mutans*, tem um módulo de lise descrito como incomum: uma holina
+  (ORF18) e duas enzimas líticas (ORF19, Acm; ORF20, CHAP). É exatamente o
+  padrão que o critério de sintenia procura — e serve de controle positivo
+  para validar o método.
+
 ## Biossegurança
 
 Trabalho com bacteriófagos e proteínas líticas segue as normas de
