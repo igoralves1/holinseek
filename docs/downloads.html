@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Downloads — HolinSeek</title>
+<meta name="description" content="Baixe os slides da apresentação em PDF e o caderno em Word, o código do pipeline e o genoma sintético de exemplo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">Holin<span>Seek</span></a>
+    <nav class="main">
+      <a href="index.html">O estudo</a>
+      <a href="ciencia.html">A ciência</a>
+      <a href="pipeline.html">Pipeline</a>
+      <a href="dados.html">Dados e artigos</a>
+      <a href="ia.html">Camada de IA</a>
+      <a href="negocio.html">Viabilidade</a>
+      <a href="downloads.html">Downloads</a>
+    </nav>
+    <button class="theme-toggle" type="button">escuro</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Material</p>
+  <h1>Downloads</h1>
+  <p class="lead">
+    A apresentação completa em PDF e Word, o código do pipeline e os dados de
+    exemplo. Tudo sob licença MIT.
+  </p>
+</section>
+
+<h2>Apresentação</h2>
+
+<div class="grid two">
+  <a class="dl-card" href="files/holinseek-slides.pdf" download>
+    <span class="ext">PDF</span>
+    <span>
+      <span class="t">Slides da apresentação</span><br>
+      <span class="s">15 páginas em 16:9, fontes embutidas · cerca de 1,2 MB</span>
+    </span>
+  </a>
+  <a class="dl-card" href="files/holinseek-caderno.docx" download>
+    <span class="ext">DOCX</span>
+    <span>
+      <span class="t">Caderno de apoio</span><br>
+      <span class="s">Conteúdo e notas do orador, editável no Word · cerca de 22 KB</span>
+    </span>
+  </a>
+</div>
+
+<p>
+  O PDF traz os slides como são projetados. O caderno em Word traz o mesmo
+  conteúdo em texto corrido, com as <strong>notas do orador</strong> de cada
+  slide, sumário navegável e as fórmulas como equações nativas do Word —
+  editáveis, não imagens.
+</p>
+
+<div class="callout">
+  <p>
+    <strong>O que está na apresentação.</strong> O problema da resistência
+    antimicrobiana, a biologia do cassete de lise, a química do envelope
+    bacteriano com as fórmulas moleculares, o mecanismo de acionamento, as nove
+    etapas do pipeline com as ferramentas de cada uma, o código, a estaca
+    tecnológica e a validação experimental.
+  </p>
+</div>
+
+<h2>Código</h2>
+
+<div class="grid two">
+  <a class="dl-card" href="https://github.com/igoralves1/holinseek">
+    <span class="ext">GIT</span>
+    <span>
+      <span class="t">Repositório completo</span><br>
+      <span class="s">Pipeline, testes e este site · licença MIT</span>
+    </span>
+  </a>
+  <a class="dl-card" href="https://github.com/igoralves1/holinseek/archive/refs/heads/main.zip">
+    <span class="ext">ZIP</span>
+    <span>
+      <span class="t">Baixar como arquivo</span><br>
+      <span class="s">Instantâneo do ramo principal</span>
+    </span>
+  </a>
+</div>
+
+<pre><code>git clone https://github.com/igoralves1/holinseek.git
+cd holinseek
+make setup
+make demo</code></pre>
+
+<p>
+  O comando <code>make demo</code> roda o pipeline inteiro sobre um genoma
+  sintético que acompanha o repositório, sem baixar nada. É a forma mais
+  rápida de conferir que a instalação funciona.
+</p>
+
+<h2>Dados de exemplo</h2>
+
+<ul class="linklist">
+  <li>
+    <a href="https://github.com/igoralves1/holinseek/blob/main/data/exemplo/fago_sintetico.fasta">
+      Genoma sintético de demonstração
+    </a>
+    <span class="meta">FASTA · 2,5 kb</span>
+    <span class="desc">
+      Pseudo-genoma construído para exercitar o pipeline: contém uma proteína
+      com perfil de holina, uma com perfil de endolisina e uma isca neutra.
+      <strong>Não corresponde a nenhum organismo real</strong> e não serve como
+      resultado biológico.
+    </span>
+  </li>
+  <li>
+    <a href="https://github.com/igoralves1/holinseek/blob/main/data/exemplo/rotulos.example.csv">
+      Modelo de arquivo de rótulos
+    </a>
+    <span class="meta">CSV</span>
+    <span class="desc">
+      Template para treinar o classificador com os seus próprios exemplos
+      auditados. Vem vazio de propósito — a página
+      <a href="ia.html">Camada de IA</a> explica por quê.
+    </span>
+  </li>
+</ul>
+
+<p>
+  Para dados reais, a página <a href="dados.html">Dados e artigos</a> lista as
+  bases públicas, e o comando abaixo baixa um conjunto direto do NCBI:
+</p>
+
+<pre><code>holinseek fetch --query fagos-refseq --limit 50</code></pre>
+
+<h2>Citação</h2>
+
+<p>Se este material for útil em trabalho acadêmico:</p>
+
+<pre><code>Duran, D.; Alves, I. HolinSeek: descoberta computacional de holinas
+em genomas de bacteriófago. 2026.
+https://github.com/igoralves1/holinseek</code></pre>
+
+<h2>Licença e uso</h2>
+
+<p>
+  Código e conteúdo sob licença MIT: livre para usar, modificar e
+  redistribuir, inclusive comercialmente, mantida a atribuição. As bases de
+  dados externas citadas têm cada uma os seus próprios termos — verifique
+  antes de redistribuir dados de terceiros.
+</p>
+
+<div class="callout warn">
+  <p>
+    Trabalho com bacteriófagos e proteínas líticas segue as normas de
+    biossegurança da instituição e, no caso terapêutico, a regulação sanitária
+    aplicável. Nada neste material é protocolo experimental, e toda saída do
+    pipeline é predição que exige confirmação na bancada.
+  </p>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p><strong>HolinSeek</strong> — descoberta computacional de holinas em genomas de bacteriófago.</p>
+      <p class="note">Todo o material sob licença MIT.</p>
+    </div>
+    <div>
+      <p>Deraldo Duran — UFC</p>
+      <p>Igor Alves — Especialista em Bioinformática, UQAM</p>
+      <p><a href="https://github.com/igoralves1/holinseek">github.com/igoralves1/holinseek</a> · licença MIT</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

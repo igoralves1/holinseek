@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HolinSeek — Descoberta de holinas através da bioinformática</title>
+<meta name="description" content="Como encontrar holinas, as proteínas que controlam o momento da lise bacteriana, em milhares de genomas de bacteriófago — química, pipeline de bioinformática, estaca tecnológica e caminho para produto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">Holin<span>Seek</span></a>
+    <nav class="main">
+      <a href="index.html">O estudo</a>
+      <a href="ciencia.html">A ciência</a>
+      <a href="pipeline.html">Pipeline</a>
+      <a href="dados.html">Dados e artigos</a>
+      <a href="ia.html">Camada de IA</a>
+      <a href="negocio.html">Viabilidade</a>
+      <a href="downloads.html">Downloads</a>
+    </nav>
+    <button class="theme-toggle" type="button">escuro</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Genômica de bacteriófagos</p>
+  <h1>Descoberta de holinas através da bioinformática</h1>
+  <p class="lead">
+    Holinas são as proteínas que decidem <em>quando</em> uma bactéria infectada
+    se rompe. Elas quase não conservam sequência entre famílias — então não
+    adianta procurá-las por semelhança. Este projeto procura pela física que a
+    função impõe, e entrega à bancada uma lista curta em vez de uma lista
+    impossível.
+  </p>
+  <div class="btn-row">
+    <a class="btn" href="pipeline.html">Ver o pipeline</a>
+    <a class="btn ghost" href="https://github.com/igoralves1/holinseek">Código no GitHub</a>
+    <a class="btn ghost" href="downloads.html">Baixar os slides</a>
+  </div>
+</section>
+
+<h2>O problema</h2>
+
+<p>
+  A resistência antimicrobiana é classificada pela Organização Mundial da Saúde
+  como uma das principais ameaças à saúde global. O gargalo não é só
+  desenvolver antibióticos: é <strong>achar mecanismos novos</strong>. A maioria
+  das classes em uso clínico ataca os mesmos quatro processos — parede celular,
+  ribossomo, DNA girase e via do folato — e a pressão seletiva já produziu
+  resistência contra todos.
+</p>
+
+<p>
+  Bacteriófagos resolveram esse problema por conta própria, há bilhões de anos.
+  Ao final do ciclo lítico, o fago precisa romper o envelope da célula
+  hospedeira para liberar a progênie, e para isso codifica um módulo compacto
+  de genes — o <strong>cassete de lise</strong>.
+</p>
+
+<div class="grid three">
+  <div class="card">
+    <h3>Holina</h3>
+    <p>Proteína pequena de membrana. Forma o poro e define o <em>momento</em> da lise.</p>
+  </div>
+  <div class="card">
+    <h3>Endolisina</h3>
+    <p>Hidrolase que degrada o peptidoglicano, depois que a holina lhe dá acesso.</p>
+  </div>
+  <div class="card">
+    <h3>Spanina</h3>
+    <p>Rompe a membrana externa, necessária em bactérias Gram-negativas.</p>
+  </div>
+</div>
+
+<div class="callout">
+  <p>
+    <strong>A holina sozinha não lisa a célula.</strong> Ela é o componente
+    temporal do sistema — um relógio molecular. Essa distinção é o que torna o
+    problema computacional interessante: a função não está num sítio
+    catalítico que se possa procurar como motivo, está numa propriedade física
+    distribuída por toda a cadeia.
+  </p>
+</div>
+
+<h2>A escala</h2>
+
+<div class="grid four">
+  <div class="card stat">
+    <span class="num">~30 mil</span>
+    <span class="lbl">genomas completos de fago em bases públicas curadas</span>
+  </div>
+  <div class="card stat">
+    <span class="num">milhões</span>
+    <span class="lbl">de contigs virais em metagenomas e viromas</span>
+  </div>
+  <div class="card stat">
+    <span class="num">60–80%</span>
+    <span class="lbl">das proteínas de fago sem função atribuída</span>
+  </div>
+  <div class="card stat">
+    <span class="num">1 por vez</span>
+    <span class="lbl">é o ritmo da bancada: clonar, expressar e testar leva semanas</span>
+  </div>
+</div>
+
+<p class="note">
+  Ordens de magnitude aproximadas; as bases crescem continuamente. A página
+  <a href="dados.html">Dados e artigos</a> traz as fontes primárias.
+</p>
+
+<h2>Por que o BLAST não resolve</h2>
+
+<p>
+  A primeira ideia de qualquer bioinformata é buscar por homologia. Aqui ela
+  falha, e falha por um motivo biológico, não técnico: <strong>holinas de
+  famílias diferentes não compartilham ancestral reconhecível na
+  sequência</strong>. Mais de uma centena de famílias já descritas convergiram
+  para a mesma função com cadeias de aminoácidos que um alinhamento não
+  aproxima.
+</p>
+
+<p>
+  O que elas compartilham é o que a membrana exige. Para atravessar cerca de
+  4 nm de interior apolar, uma cadeia precisa de um trecho hidrofóbico contínuo
+  de cerca de 19 resíduos. Para que esse trecho fique orientado corretamente, a
+  cauda que sobra no citoplasma precisa ser positiva. Isso não é conservação de
+  sequência — é consequência de física, e <em>isso</em> dá para calcular.
+</p>
+
+<h2>A ideia central do estudo</h2>
+
+<div class="flow">
+  <div class="flow-step">
+    <div class="n">1</div>
+    <div>
+      <h4>Traduzir a restrição física em números</h4>
+      <p>
+        Hidrofobicidade média (GRAVY), número de hélices transmembrana, carga
+        líquida da cauda C-terminal, comprimento. Tudo calculável diretamente
+        da sequência de aminoácidos, sem alinhar com nada.
+      </p>
+      <p class="tools">Kyte-Doolittle · regra do interior positivo</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="n">2</div>
+    <div>
+      <h4>Usar o contexto genômico como o filtro mais forte</h4>
+      <p>
+        Uma proteína pequena e hidrofóbica <em>ao lado</em> de uma hidrolase de
+        parede celular é um candidato muito mais forte que a mesma proteína
+        isolada. Holina e endolisina viajam juntas no genoma.
+      </p>
+      <p class="tools">sintenia do cassete de lise</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="n">3</div>
+    <div>
+      <h4>Priorizar com aprendizado de máquina, não decidir com ele</h4>
+      <p>
+        O modelo ordena a fila; os critérios explícitos é que dão o veredito.
+        Cada candidato sai com a conta aberta: qual critério passou, qual não
+        passou e por quê.
+      </p>
+      <p class="tools">agrupamento não supervisionado · classificador auditável</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="n">4</div>
+    <div>
+      <h4>Devolver à bancada uma lista curta e justificada</h4>
+      <p>
+        O objetivo não é substituir o experimento. É transformar dez mil
+        possibilidades em dez candidatos que valem o custo de semanas de
+        laboratório cada um.
+      </p>
+      <p class="tools">relatório com evidências e ressalvas</p>
+    </div>
+  </div>
+</div>
+
+<h2>O que este projeto entrega</h2>
+
+<div class="grid two">
+  <div class="card">
+    <h3>Um pipeline que roda</h3>
+    <p>
+      Código Python instalável com <code>pip</code>, configurado por um arquivo
+      <code>.env</code>, com demonstração offline. Do download no NCBI ao
+      relatório final.
+    </p>
+    <p><a href="pipeline.html">Ver as nove etapas →</a></p>
+  </div>
+  <div class="card">
+    <h3>A química explicada</h3>
+    <p>
+      As fórmulas dos lipídeos da membrana, do peptidoglicano e da força
+      próton-motriz — com as estruturas desenhadas e as equações renderizadas.
+    </p>
+    <p><a href="ciencia.html">Ver a química →</a></p>
+  </div>
+  <div class="card">
+    <h3>Uma camada de IA honesta</h3>
+    <p>
+      Interpretação baseada em evidências calculadas, não em alucinação. O
+      modelo redige; os números decidem.
+    </p>
+    <p><a href="ia.html">Como funciona →</a></p>
+  </div>
+  <div class="card">
+    <h3>Um caminho até produto</h3>
+    <p>
+      Análise de viabilidade comercial, modelos de receita e as etapas
+      concretas para uma startup partir daqui.
+    </p>
+    <p><a href="negocio.html">Ver a análise →</a></p>
+  </div>
+</div>
+
+<div class="callout warn">
+  <p>
+    <strong>Biossegurança.</strong> Trabalho com bacteriófagos e proteínas
+    líticas segue as normas de biossegurança da instituição e, no caso
+    terapêutico, a regulação sanitária aplicável. A triagem computacional
+    antecede essa avaliação — não a substitui nem a dispensa. Nada neste site é
+    protocolo experimental.
+  </p>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p><strong>HolinSeek</strong> — descoberta computacional de holinas em genomas de bacteriófago.</p>
+      <p class="note">Todo resultado do pipeline é predição e exige confirmação experimental.</p>
+    </div>
+    <div>
+      <p>Deraldo Duran — UFC</p>
+      <p>Igor Alves — Especialista em Bioinformática, UQAM</p>
+      <p><a href="https://github.com/igoralves1/holinseek">github.com/igoralves1/holinseek</a> · licença MIT</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

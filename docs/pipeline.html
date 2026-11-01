@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline — HolinSeek</title>
+<meta name="description" content="As nove etapas do pipeline de bioinformática, o código Python que as implementa, os sete critérios de triagem e a estaca tecnológica que sustenta tudo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<script>
+window.MathJax = {
+  loader: { load: ["[tex]/mhchem"] },
+  tex: { packages: { "[+]": ["mhchem"] }, inlineMath: [["\\(", "\\)"]], displayMath: [["$$", "$$"]] },
+  options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">Holin<span>Seek</span></a>
+    <nav class="main">
+      <a href="index.html">O estudo</a>
+      <a href="ciencia.html">A ciência</a>
+      <a href="pipeline.html">Pipeline</a>
+      <a href="dados.html">Dados e artigos</a>
+      <a href="ia.html">Camada de IA</a>
+      <a href="negocio.html">Viabilidade</a>
+      <a href="downloads.html">Downloads</a>
+    </nav>
+    <button class="theme-toggle" type="button">escuro</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Operacionalização</p>
+  <h1>O pipeline, etapa por etapa</h1>
+  <p class="lead">
+    Nove etapas, do genoma bruto ao candidato priorizado. Todo o código é
+    Python livre, roda num notebook comum e tem uma demonstração que funciona
+    sem conexão.
+  </p>
+  <div class="btn-row">
+    <a class="btn" href="https://github.com/igoralves1/holinseek">Ver o código</a>
+    <a class="btn ghost" href="ia.html">Camada de IA</a>
+  </div>
+</section>
+
+<h2>Instalar e rodar</h2>
+
+<pre><code>git clone https://github.com/igoralves1/holinseek.git
+cd holinseek
+
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+
+pip install -r requirements.txt
+pip install -e .
+
+cp .env.example .env               # preencha NCBI_EMAIL
+holinseek check                    # mostra configuração e dependências</code></pre>
+
+<p>Para verificar a instalação sem baixar nada:</p>
+
+<pre><code>holinseek demo</code></pre>
+
+<p>
+  Roda o pipeline inteiro sobre um genoma <strong>sintético</strong> que
+  acompanha o repositório. Não é um organismo real: serve só para confirmar
+  que tudo funciona.
+</p>
+
+<p>E o fluxo real, com dados do NCBI:</p>
+
+<pre><code>holinseek fetch --query fagos-refseq --limit 50
+holinseek run data/raw/genomas.fasta</code></pre>
+
+<h2>As nove etapas</h2>
+
+<div class="flow">
+
+  <div class="flow-step">
+    <div class="n">01</div>
+    <div>
+      <h4>Aquisição dos genomas</h4>
+      <p>
+        Download pelas E-utilities do NCBI, com registro de proveniência: a
+        consulta exata, a lista de acessos e a data ficam gravadas num
+        manifesto JSON ao lado do FASTA, para que a análise possa ser refeita
+        sobre o mesmo conjunto meses depois.
+      </p>
+      <p class="tools">NCBI E-utilities · INPHARED · IMG/VR</p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="n">02</div>
+    <div>
+      <h4>Controle de qualidade e triagem viral</h4>
+      <p>
+        Descarta contigs curtos demais, sequências duplicadas e material que
+        não é viral. Em metagenomas esta etapa é a que mais economiza tempo
+        adiante.
+      </p>
+      <p class="tools">fastp · CheckV · geNomad</p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="n">03</div>
+    <div>
+      <h4>Predição de genes</h4>
+      <p>
+        Prodigal em modo viral quando <code>pyrodigal</code> está instalado;
+        caso contrário, um localizador de ORFs de seis quadros embutido no
+        projeto, com o código genético 11. Códons de início alternativos
+        (GTG, TTG) são tratados como metionina inicial — vários cassetes de
+        lise começam justamente neles.
+      </p>
+      <p class="tools">pyrodigal · PHANOTATE</p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="n">04</div>
+    <div>
+      <h4>Busca por homologia remota</h4>
+      <p>
+        Perfis de domínio contra Pfam e PHROG. Encontra pouco para holinas —
+        esse é justamente o ponto do estudo — mas é o que identifica as
+        <em>endolisinas</em> vizinhas, que são bem conservadas e servem de
+        âncora para a etapa 09.
+      </p>
+      <p class="tools">HMMER / pyhmmer · DIAMOND · Pfam · PHROG</p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="n">05</div>
+    <div>
+      <h4>Topologia de membrana</h4>
+      <p>
+        Hélices transmembrana por perfil de hidropatia de Kyte-Doolittle, com
+        janela de 19 resíduos e limiar 1,6. É uma heurística: roda offline e
+        serve para a primeira peneira. Para o resultado final, confirme com um
+        preditor treinado.
+      </p>
+      <p class="tools">interno · DeepTMHMM · Phobius · TMbed</p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="n">06</div>
+    <div>
+      <h4>Atributos físico-químicos</h4>
+      <p>
+        GRAVY, carga líquida em função do pH, ponto isoelétrico, carga da cauda
+        C-terminal, fração transmembrana, aromaticidade. Onze atributos por
+        proteína, todos calculados sem dependência externa.
+      </p>
+      <p class="tools">implementação própria · Biopython ProtParam</p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="n">07</div>
+    <div>
+      <h4>Estrutura e busca estrutural</h4>
+      <p>
+        Predição de dobramento e comparação por forma, não por alfabeto.
+        Holinas divergem muito em sequência e bem menos em estrutura, então
+        esta etapa recupera parentescos que o alinhamento perde.
+      </p>
+      <p class="tools">ColabFold · AlphaFold DB · Foldseek</p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="n">08</div>
+    <div>
+      <h4>Aprendizado de máquina</h4>
+      <p>
+        Agrupamento não supervisionado sobre o espaço de atributos, e um
+        classificador supervisionado quando há rótulos auditados. A validação
+        cruzada é agrupada por genoma — sem isso, a acurácia medida é ficção.
+      </p>
+      <p class="tools">scikit-learn · embeddings opcionais</p>
+    </div>
+  </div>
+
+  <div class="flow-step">
+    <div class="n">09</div>
+    <div>
+      <h4>Contexto genômico — o cassete de lise</h4>
+      <p>
+        Procura hidrolases de parede celular na vizinhança de cada candidato,
+        dentro de uma janela configurável. É o critério de maior peso de todos:
+        holina e endolisina formam um módulo funcional e viajam juntas.
+      </p>
+      <p class="tools">análise de sintenia · clinker · Pharokka</p>
+    </div>
+  </div>
+
+</div>
+
+<h2>Os sete critérios</h2>
+
+<p>
+  Cada critério é avaliado isoladamente e guardado com o valor medido, o valor
+  esperado e a justificativa. Guardar critério a critério — em vez de só a nota
+  final — é o que torna o resultado auditável.
+</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Critério</th><th>Faixa esperada</th><th>Peso</th><th>Por quê</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Comprimento</td><td>50–150 aa</td><td>1,0</td><td>Entre as menores proteínas funcionais de um genoma viral</td></tr>
+    <tr><td>Hélices transmembrana</td><td>1–4</td><td>2,0</td><td>Define as classes I, II e III; zero significa que não se insere</td></tr>
+    <tr><td>Hidrofobicidade</td><td>GRAVY &gt; 0,4</td><td>1,5</td><td>Precisa particionar no interior apolar da bicamada</td></tr>
+    <tr><td>Carga da cauda</td><td>\(q \geq +3\)</td><td>1,5</td><td>Regra do interior positivo</td></tr>
+    <tr><td>Metionina inicial</td><td>presente</td><td>0,5</td><td>Sanidade da predição de genes</td></tr>
+    <tr><td><strong>Endolisina vizinha</strong></td><td>mesmo módulo</td><td><strong>2,5</strong></td><td>O critério mais forte: o cassete de lise</td></tr>
+    <tr><td>Fase sobreposta</td><td>ORF embutida</td><td>0,5</td><td>Assinatura do par holina/antiholina</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="note">
+  Todos os limiares são configuráveis no arquivo <code>.env</code>, sem tocar
+  no código.
+</p>
+
+<h2>O código</h2>
+
+<h3>O filtro físico-químico</h3>
+
+<p>
+  Os sete critérios do quadro acima, traduzidos em código. É deliberadamente
+  simples: o valor está em rodar isto sobre todo o espaço de sequências, com
+  proveniência registrada.
+</p>
+
+<pre><code>from holinseek.biophysics import compute_features
+
+features = compute_features(sequencia, window=19, threshold=1.6)
+
+candidato = (
+    50 &lt;= features.length &lt;= 150
+    and 1 &lt;= features.n_tmd &lt;= 4
+    and features.gravy &gt; 0.4
+    and features.tail_charge &gt;= 3
+)</code></pre>
+
+<h3>O perfil de hidropatia</h3>
+
+<p>
+  A média móvel é calculada de forma incremental — soma o resíduo que entra,
+  subtrai o que sai. Isso mantém o custo linear no comprimento da proteína,
+  o que importa quando se processa milhões de sequências.
+</p>
+
+<pre><code>def hydropathy_profile(seq, window=19):
+    values = [KYTE_DOOLITTLE.get(aa, 0.0) for aa in seq]
+    total = sum(values[:window])
+    profile = [total / window]
+    for i in range(window, len(values)):
+        total += values[i] - values[i - window]
+        profile.append(total / window)
+    return profile</code></pre>
+
+<h3>Orquestração em Nextflow</h3>
+
+<p>
+  Para rodar em escala — milhares de genomas, em cluster ou nuvem — o pipeline
+  Python entra como etapa de um fluxo declarativo, com cada passo em contêiner
+  de versão fixada.
+</p>
+
+<pre><code>workflow {
+  genomas = Channel.fromPath(params.fasta)
+  PRODIGAL_GV(genomas)
+    | DEEPTMHMM
+    | HOLINSEEK_SCORE
+    | RANK_CANDIDATES
+}
+
+process DEEPTMHMM {
+  container 'biocontainers/deeptmhmm:1.0.24'
+  cpus 8
+  input:  path faa
+  output: path 'topology.gff3'
+}</code></pre>
+
+<h2>A estaca tecnológica</h2>
+
+<p>
+  A escolha de cada camada foi guiada por <strong>reprodutibilidade</strong>,
+  não por desempenho. Um candidato que não pode ser reproduzido não serve para
+  publicar nem para levar à bancada.
+</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Camada</th><th>Tecnologias</th><th>Para que serve</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Dados e formatos</td><td>FASTA, GFF3, TSV, JSON, Parquet</td><td>Sequências, anotações e tabelas de atributos</td></tr>
+    <tr><td>Bases de referência</td><td>NCBI Nucleotide e Protein, RefSeq viral, INPHARED, Pfam, PHROG, UniProt</td><td>Genomas de entrada e perfis de domínio</td></tr>
+    <tr><td>Ambiente</td><td>venv, Conda/Bioconda, Docker, Apptainer</td><td>Versões fixadas e execução reprodutível</td></tr>
+    <tr><td>Orquestração</td><td>Nextflow DSL2 ou Snakemake, nf-core</td><td>Paralelismo, retomada e proveniência</td></tr>
+    <tr><td>Computação</td><td>notebook · cluster HPC com SLURM · nuvem com armazenamento de objetos e filas de lote</td><td>Escala horizontal</td></tr>
+    <tr><td>Aceleração</td><td>GPU com CUDA</td><td>Predição estrutural e modelos de linguagem de proteína</td></tr>
+    <tr><td>Aprendizado de máquina</td><td>scikit-learn, NumPy, pandas; PyTorch opcional</td><td>Agrupamento e classificação</td></tr>
+    <tr><td>Interface</td><td>Typer e Rich</td><td>Linha de comando legível</td></tr>
+    <tr><td>Análise e relato</td><td>matplotlib, Jupyter, Markdown</td><td>Figuras e relatório final</td></tr>
+    <tr><td>Rastreabilidade</td><td>Git, manifestos de proveniência, arquivos de ambiente versionados</td><td>Reproduzir qualquer resultado meses depois</td></tr>
+    <tr><td>Testes</td><td>pytest</td><td>25 testes sobre a biofísica, a pontuação e o fluxo completo</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>O que sai no final</h2>
+
+<div class="grid three">
+  <div class="card">
+    <h3><code>candidatos.tsv</code></h3>
+    <p>Uma linha por candidato, com os onze atributos, a nota e a faixa de prioridade.</p>
+  </div>
+  <div class="card">
+    <h3><code>candidatos.json</code></h3>
+    <p>O mesmo, mais o veredito de cada um dos sete critérios, com valor medido e justificativa.</p>
+  </div>
+  <div class="card">
+    <h3><code>relatorio.md</code></h3>
+    <p>Relatório legível: evidências por candidato, ressalvas e o próximo passo experimental sugerido.</p>
+  </div>
+</div>
+
+<div class="callout warn">
+  <p>
+    Toda saída do pipeline é <strong>predição computacional</strong>. Nenhum
+    candidato é uma holina até que a bancada demonstre que é.
+  </p>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p><strong>HolinSeek</strong> — descoberta computacional de holinas em genomas de bacteriófago.</p>
+      <p class="note">Software livre, licença MIT. A mesma configuração roda em notebook, cluster ou nuvem.</p>
+    </div>
+    <div>
+      <p>Deraldo Duran — UFC</p>
+      <p>Igor Alves — Especialista em Bioinformática, UQAM</p>
+      <p><a href="https://github.com/igoralves1/holinseek">github.com/igoralves1/holinseek</a> · licença MIT</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

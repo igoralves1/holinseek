@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viabilidade comercial — HolinSeek</title>
+<meta name="description" content="Análise de viabilidade comercial da descoberta computacional de holinas: quem compra, modelos de receita, propriedade intelectual, caminho regulatório e as etapas concretas para uma startup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">Holin<span>Seek</span></a>
+    <nav class="main">
+      <a href="index.html">O estudo</a>
+      <a href="ciencia.html">A ciência</a>
+      <a href="pipeline.html">Pipeline</a>
+      <a href="dados.html">Dados e artigos</a>
+      <a href="ia.html">Camada de IA</a>
+      <a href="negocio.html">Viabilidade</a>
+      <a href="downloads.html">Downloads</a>
+    </nav>
+    <button class="theme-toggle" type="button">escuro</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Do laboratório ao produto</p>
+  <h1>Viabilidade comercial</h1>
+  <p class="lead">
+    Um pipeline de triagem não é um produto. Esta página separa o que já tem
+    valor comercial hoje do que exige anos de validação, e descreve o caminho
+    concreto entre os dois.
+  </p>
+</section>
+
+<div class="callout warn">
+  <p>
+    <strong>Como ler esta página.</strong> As faixas de custo e prazo são
+    estimativas de ordem de grandeza, para dimensionar a conversa — não
+    projeções. Nenhum número de mercado é citado sem que você mesmo deva
+    levantá-lo. Onde está escrito <em>a validar</em>, é literalmente o que
+    significa: é trabalho a fazer, não uma conclusão.
+  </p>
+</div>
+
+<h2>A tese comercial, em uma frase</h2>
+
+<div class="callout">
+  <p>
+    O gargalo da descoberta de novos antimicrobianos não é a falta de
+    biodiversidade — é o <strong>custo de decidir o que vale testar</strong>.
+    Quem reduz de forma confiável o número de candidatos que precisam ir à
+    bancada vende tempo e dinheiro de laboratório, que é a coisa mais cara do
+    setor.
+  </p>
+</div>
+
+<h2>O que existe hoje, e o que não existe</h2>
+
+<div class="grid two">
+  <div class="card">
+    <h3>Já pronto</h3>
+    <ul>
+      <li>Um pipeline funcionando, instalável e testado.</li>
+      <li>Um método que não depende de homologia — o diferencial técnico real.</li>
+      <li>Saída auditável: cada candidato com a conta aberta.</li>
+      <li>Custo marginal por genoma próximo de zero.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Ainda não existe</h3>
+    <ul>
+      <li>Um único candidato confirmado experimentalmente.</li>
+      <li>Métricas de desempenho contra um conjunto de verdade.</li>
+      <li>Qualquer evidência de eficácia antimicrobiana.</li>
+      <li>Propriedade intelectual depositada.</li>
+    </ul>
+  </div>
+</div>
+
+<p>
+  Essa assimetria define a estratégia: <strong>a primeira receita não vem de
+  um antimicrobiano.</strong> Vem de vender a triagem a quem já tem
+  laboratório, enquanto a validação própria avança em paralelo.
+</p>
+
+<h2>Quem compra</h2>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Segmento</th>
+      <th>Dor que sente</th>
+      <th>Ciclo de venda</th>
+      <th>Barreira de entrada</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Grupos acadêmicos de fagoterapia</strong></td>
+      <td>Têm genomas e bancada, não têm pipeline próprio de triagem</td>
+      <td>curto — semanas</td>
+      <td>baixa: orçamento pequeno, decisão local</td>
+    </tr>
+    <tr>
+      <td><strong>Empresas de biocontrole alimentar</strong></td>
+      <td>Precisam de novos agentes líticos contra <em>Listeria</em>, <em>Salmonella</em>, <em>E. coli</em></td>
+      <td>médio — meses</td>
+      <td>média: exigem validação em matriz alimentar</td>
+    </tr>
+    <tr>
+      <td><strong>Startups de fagoterapia</strong></td>
+      <td>Querem ajustar a temporização de lise de fagos engenheirados</td>
+      <td>médio</td>
+      <td>média: precisam enxergar diferencial sobre o que já fazem</td>
+    </tr>
+    <tr>
+      <td><strong>Farmacêuticas (antibacterianos)</strong></td>
+      <td>Escassez de alvos novos; interesse em mecanismos inéditos</td>
+      <td>longo — um a dois anos</td>
+      <td>alta: só conversam com dados experimentais</td>
+    </tr>
+    <tr>
+      <td><strong>Agropecuária e aquicultura</strong></td>
+      <td>Pressão regulatória crescente sobre antibióticos em produção animal</td>
+      <td>longo</td>
+      <td>alta: preço por dose muito baixo</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p class="note">
+  Os dois primeiros segmentos são os únicos que compram algo que existe hoje.
+  Comece por eles.
+</p>
+
+<h2>Modelos de receita</h2>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Modelo</th><th>Como funciona</th><th>Receita</th><th>Avaliação</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Serviço de triagem</strong></td>
+      <td>O cliente envia genomas; recebe a lista priorizada com o relatório.</td>
+      <td>por projeto</td>
+      <td><strong>Comece aqui.</strong> Receita imediata, valida a demanda, não exige IP nem regulação.</td>
+    </tr>
+    <tr>
+      <td><strong>Plataforma por assinatura</strong></td>
+      <td>Interface web sobre o pipeline, com histórico e base de candidatos.</td>
+      <td>recorrente, por assento</td>
+      <td>Boa margem, mas exige produto de software de verdade — e aí o concorrente é o próprio cliente rodando o código aberto.</td>
+    </tr>
+    <tr>
+      <td><strong>Parceria de descoberta</strong></td>
+      <td>A triagem entra como etapa de um programa do parceiro, com marcos.</td>
+      <td>pagamentos por marco + participação</td>
+      <td>O melhor retorno ajustado ao risco. Exige pelo menos um candidato validado para abrir a conversa.</td>
+    </tr>
+    <tr>
+      <td><strong>Licenciamento de ativo</strong></td>
+      <td>Uma proteína validada é licenciada para desenvolvimento.</td>
+      <td>entrada + marcos + royalties</td>
+      <td>O maior valor e o mais distante. Depende inteiramente de dados experimentais.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <p>
+    <strong>A tensão do código aberto.</strong> O pipeline é MIT: qualquer um
+    pode rodar. Isso é bom para adoção e credibilidade científica, e péssimo
+    como fosso competitivo. O que não é copiável é o que você acumula
+    <em>rodando</em> o pipeline: candidatos validados, o conjunto de treino
+    auditado e a curadoria. Mantenha o método aberto e os dados de validação
+    como o ativo.
+  </p>
+</div>
+
+<h2>O que é defensável</h2>
+
+<div class="grid two">
+  <div class="card">
+    <h3>Fraco como fosso</h3>
+    <ul>
+      <li>O código — é aberto, por escolha.</li>
+      <li>Os critérios físico-químicos — estão publicados desde os anos 1980.</li>
+      <li>O acesso aos genomas — as bases são públicas.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Forte como fosso</h3>
+    <ul>
+      <li><strong>Candidatos validados</strong> e os dados que provam que funcionam.</li>
+      <li><strong>O conjunto de treino auditado</strong>: rótulo por rótulo, com a fonte.</li>
+      <li><strong>Sequências específicas e seus usos</strong>, se patenteadas antes de qualquer divulgação.</li>
+      <li>A relação com os laboratórios que fazem a validação.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Propriedade intelectual</h2>
+
+<p>
+  Três pontos que decidem se haverá algo a licenciar depois:
+</p>
+
+<ul>
+  <li>
+    <strong>Divulgação queima novidade.</strong> Publicar uma sequência
+    candidata num artigo ou num repositório público antes do depósito elimina
+    a possibilidade de patente sobre ela na maior parte das jurisdições.
+    Decida, <em>antes</em> de rodar a triagem em escala, o que será publicado e
+    o que será depositado primeiro.
+  </li>
+  <li>
+    <strong>O que tende a ser protegível</strong> é a proteína específica
+    modificada e seu uso para uma finalidade — não o método de triagem, que é
+    combinação de técnicas conhecidas, nem a sequência natural tal como existe.
+  </li>
+  <li>
+    <strong>Converse com o NIT da universidade cedo.</strong> Se o trabalho
+    nasceu numa instituição pública, a titularidade e as regras de
+    licenciamento já estão definidas por política institucional. Descobrir isso
+    depois é o erro mais caro e mais comum nesse tipo de projeto.
+  </li>
+</ul>
+
+<h2>Caminho regulatório</h2>
+
+<p>
+  Aqui está a decisão estratégica mais importante — e a mais contraintuitiva.
+  A aplicação terapêutica é a mais óbvia e a <strong>pior</strong> para
+  começar:
+</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Aplicação</th><th>Ordem de prazo</th><th>Ordem de custo</th><th>Observação</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Reagente de pesquisa</strong></td>
+      <td>meses</td>
+      <td>baixo</td>
+      <td>Praticamente sem barreira regulatória. Receita pequena, mas valida o produto.</td>
+    </tr>
+    <tr>
+      <td><strong>Biocontrole em alimentos</strong></td>
+      <td>1 a 3 anos</td>
+      <td>médio</td>
+      <td>Existe precedente regulatório para preparações líticas de fago em superfícies e processamento.</td>
+    </tr>
+    <tr>
+      <td><strong>Desinfecção industrial</strong></td>
+      <td>1 a 3 anos</td>
+      <td>médio</td>
+      <td>Registro como saneante; caminho mais previsível que o terapêutico.</td>
+    </tr>
+    <tr>
+      <td><strong>Saúde animal</strong></td>
+      <td>3 a 6 anos</td>
+      <td>alto</td>
+      <td>Exigências menores que humano, mas preço por dose muito pressionado.</td>
+    </tr>
+    <tr>
+      <td><strong>Terapêutico humano</strong></td>
+      <td>8 a 15 anos</td>
+      <td>muito alto</td>
+      <td>Destino final plausível. Inviável como primeiro produto de uma empresa nova.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <p>
+    <strong>Recomendação.</strong> Entre por reagente de pesquisa e biocontrole,
+    gere receita e dados reais, e deixe o terapêutico como opção de longo prazo
+    — de preferência com um parceiro que já tenha a estrutura regulatória
+    montada.
+  </p>
+</div>
+
+<h2>As etapas, em ordem</h2>
+
+<div class="phase">
+  <p class="when">Fase 0 · 1 a 3 meses</p>
+  <h3>Provar que a triagem funciona</h3>
+  <p>
+    Antes de falar com qualquer cliente: montar um conjunto de verdade com
+    holinas caracterizadas na literatura e medir o desempenho do pipeline
+    contra ele, com validação agrupada por genoma.
+  </p>
+  <ul>
+    <li>Conjunto rotulado e auditado, entrada por entrada, com a fonte de cada uma.</li>
+    <li>Sensibilidade, precisão e a curva de enriquecimento.</li>
+    <li>Comparação contra a alternativa óbvia (busca por homologia).</li>
+  </ul>
+  <p class="note">
+    Custo: tempo de pesquisa. Esta fase não precisa de dinheiro — e sem ela
+    nada do resto se sustenta.
+  </p>
+</div>
+
+<div class="phase">
+  <p class="when">Fase 1 · 3 a 9 meses</p>
+  <h3>Validar na bancada os primeiros candidatos</h3>
+  <p>
+    Escolher de três a cinco candidatos de prioridade alta, sintetizar os genes
+    e caracterizar: localização na membrana, efeito sobre o potencial e
+    dependência da endolisina.
+  </p>
+  <ul>
+    <li>Parceria com um laboratório que já trabalhe com fagos — mais rápido e mais barato que montar o próprio.</li>
+    <li>Ordem de custo: dezenas de milhares de reais por candidato, entre síntese, expressão e ensaios.</li>
+    <li>Decisão de IP <strong>antes</strong> de qualquer divulgação.</li>
+  </ul>
+  <p class="note">
+    Marco que destrava tudo: um candidato predito computacionalmente e
+    confirmado experimentalmente. É a única prova que importa.
+  </p>
+</div>
+
+<div class="phase">
+  <p class="when">Fase 2 · 6 a 18 meses</p>
+  <h3>Primeira receita: serviço de triagem</h3>
+  <p>
+    Com a Fase 0 publicada e um resultado da Fase 1 em mãos, vender triagem
+    por projeto a grupos acadêmicos e empresas de biocontrole.
+  </p>
+  <ul>
+    <li>De três a cinco projetos pagos para validar preço e demanda.</li>
+    <li>Padronizar a entrega: o relatório vira produto.</li>
+    <li>Cada projeto alimenta o conjunto de treino — o ativo que compõe.</li>
+  </ul>
+</div>
+
+<div class="phase">
+  <p class="when">Fase 3 · 12 a 30 meses</p>
+  <h3>Transformar em plataforma</h3>
+  <p>
+    Interface web, histórico de execuções, base acumulada de candidatos, API.
+    Só faz sentido depois que o serviço manual provou que há fila de clientes.
+  </p>
+  <ul>
+    <li>Exige equipe de engenharia de software, não só de bioinformática.</li>
+    <li>O valor está na base acumulada, não no código.</li>
+  </ul>
+</div>
+
+<div class="phase">
+  <p class="when">Fase 4 · 2 a 5 anos</p>
+  <h3>Desenvolver ativo próprio</h3>
+  <p>
+    Com dados e receita, escolher a aplicação de melhor relação risco-retorno
+    — biocontrole alimentar, provavelmente — e levar um produto próprio até o
+    registro.
+  </p>
+</div>
+
+<h2>O que é preciso para começar</h2>
+
+<div class="grid three">
+  <div class="card">
+    <h3>Pessoas</h3>
+    <p>
+      Um bioinformata e um microbiologista de bancada. A dupla é obrigatória:
+      um projeto só computacional não convence ninguém, e um só experimental
+      não escala.
+    </p>
+  </div>
+  <div class="card">
+    <h3>Dinheiro</h3>
+    <p>
+      A Fase 0 custa tempo. A Fase 1 é o primeiro gasto real — a ordem de
+      grandeza de um edital de pesquisa ou de um programa de pré-aceleração,
+      não de uma rodada de investimento.
+    </p>
+  </div>
+  <div class="card">
+    <h3>Parceiros</h3>
+    <p>
+      Um laboratório com estrutura de biossegurança adequada e o núcleo de
+      inovação da universidade. Os dois contatos antes de qualquer linha de
+      código nova.
+    </p>
+  </div>
+</div>
+
+<h2>Riscos, e como testá-los barato</h2>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Risco</th><th>Gravidade</th><th>Teste mais barato</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A triagem não enriquece de verdade — acerta por acaso</td>
+      <td>fatal</td>
+      <td>Fase 0. Custa só tempo e responde a pergunta inteira.</td>
+    </tr>
+    <tr>
+      <td>Os candidatos não se expressam ou não têm efeito mensurável</td>
+      <td>alta</td>
+      <td>Fase 1 com três candidatos, não com vinte.</td>
+    </tr>
+    <tr>
+      <td>Ninguém paga por triagem — todos rodam o código aberto</td>
+      <td>alta</td>
+      <td>Dez entrevistas com grupos-alvo, antes de construir qualquer interface.</td>
+    </tr>
+    <tr>
+      <td>A universidade detém a IP em termos inviáveis</td>
+      <td>alta</td>
+      <td>Uma conversa com o NIT. Faça já.</td>
+    </tr>
+    <tr>
+      <td>Toxicidade ou imunogenicidade inviabilizam o uso terapêutico</td>
+      <td>média</td>
+      <td>Irrelevante por anos, se a entrada for por biocontrole.</td>
+    </tr>
+    <tr>
+      <td>Um grupo maior publica o mesmo método antes</td>
+      <td>média</td>
+      <td>Publique a Fase 0 cedo. Em método, prioridade vale mais que sigilo.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>O próximo passo concreto</h2>
+
+<div class="callout">
+  <p>
+    Não é levantar investimento, não é registrar empresa e não é construir
+    interface. É a <strong>Fase 0</strong>: montar o conjunto de verdade e
+    medir se a triagem enriquece. Custa tempo de pesquisa, responde à única
+    pergunta que determina se existe produto, e o resultado — positivo ou
+    negativo — é publicável de qualquer forma.
+  </p>
+  <p>
+    Tudo o mais nesta página depende dessa medida existir.
+  </p>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p><strong>HolinSeek</strong> — descoberta computacional de holinas em genomas de bacteriófago.</p>
+      <p class="note">Esta análise é um enquadramento estratégico, não aconselhamento jurídico, regulatório ou de investimento.</p>
+    </div>
+    <div>
+      <p>Deraldo Duran — UFC</p>
+      <p>Igor Alves — Especialista em Bioinformática, UQAM</p>
+      <p><a href="https://github.com/igoralves1/holinseek">github.com/igoralves1/holinseek</a> · licença MIT</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

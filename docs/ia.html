@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Camada de IA — HolinSeek</title>
+<meta name="description" content="Como o pipeline usa aprendizado de máquina para priorizar candidatos e interpretar os achados, com uma separação clara entre o que o modelo decide e o que ele apenas redige.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["$$", "$$"]] },
+  options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">Holin<span>Seek</span></a>
+    <nav class="main">
+      <a href="index.html">O estudo</a>
+      <a href="ciencia.html">A ciência</a>
+      <a href="pipeline.html">Pipeline</a>
+      <a href="dados.html">Dados e artigos</a>
+      <a href="ia.html">Camada de IA</a>
+      <a href="negocio.html">Viabilidade</a>
+      <a href="downloads.html">Downloads</a>
+    </nav>
+    <button class="theme-toggle" type="button">escuro</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Aprendizado de máquina e interpretação</p>
+  <h1>A camada de IA</h1>
+  <p class="lead">
+    A regra que organiza tudo aqui é uma só: <strong>os números decidem, o
+    modelo redige</strong>. A pontuação, os vereditos e as evidências são
+    calculados de forma determinística. A IA entra para priorizar a fila e
+    para explicar o resultado — nunca para inventar uma medida.
+  </p>
+</section>
+
+<h2>Três camadas, com papéis distintos</h2>
+
+<div class="grid three">
+  <div class="card">
+    <h3>1. Regras explícitas</h3>
+    <p>
+      Os sete critérios, com peso e justificativa. Produzem a nota, a faixa de
+      prioridade e o veredito de cada candidato.
+    </p>
+    <p class="note">Sempre ativa. Determinística. É a fonte da verdade.</p>
+  </div>
+  <div class="card">
+    <h3>2. Aprendizado de máquina</h3>
+    <p>
+      Agrupamento não supervisionado e, quando há rótulos auditados, um
+      classificador. Reordena a fila; não muda o veredito.
+    </p>
+    <p class="note">Opcional. Exige scikit-learn, já no requirements.</p>
+  </div>
+  <div class="card">
+    <h3>3. Redação em linguagem natural</h3>
+    <p>
+      Um modelo de linguagem recebe os números já calculados e escreve a
+      leitura do conjunto em prosa.
+    </p>
+    <p class="note">Opcional e desligada por padrão.</p>
+  </div>
+</div>
+
+<h2>Camada 2 — aprendizado de máquina</h2>
+
+<h3>Não supervisionado: o que não precisa de rótulo</h3>
+
+<p>
+  Os onze atributos de cada candidato formam um espaço onde a proximidade tem
+  significado biológico. O agrupamento revela estrutura sem que ninguém diga o
+  que é o quê:
+</p>
+
+<ul>
+  <li>candidatos que caem no mesmo grupo têm arquitetura de membrana parecida;</li>
+  <li>um candidato isolado de todos os outros merece um olhar — pode ser um erro de predição ou uma família nova;</li>
+  <li>o número de grupos é escolhido pelo melhor coeficiente de silhueta, não arbitrado.</li>
+</ul>
+
+<pre><code>holinseek cluster data/raw/genomas.fasta</code></pre>
+
+<h3>Supervisionado: o que exige os seus rótulos</h3>
+
+<p>
+  Um classificador treinado aprende a combinar os atributos melhor do que
+  pesos escritos à mão. Mas só vale o que vale o conjunto de treino — e aqui
+  o projeto toma uma posição deliberada:
+</p>
+
+<div class="callout">
+  <p>
+    <strong>O repositório não embarca rótulos prontos.</strong> Herdar um
+    conjunto de treino sem auditar cada entrada é o caminho mais curto para um
+    classificador que aprendeu a base de dados em vez da biologia. O arquivo
+    de rótulos vem vazio, com instruções de como montá-lo.
+  </p>
+</div>
+
+<pre><code>protein_id,label,fonte
+NC_000000_orf0012,1,artigo de caracterizacao
+NC_000000_orf0031,0,transportador anotado</code></pre>
+
+<h3>O detalhe metodológico que decide tudo</h3>
+
+<p>
+  A validação cruzada é <strong>agrupada por genoma</strong>
+  (<code>GroupKFold</code>). Sem isso, duas proteínas do mesmo fago caem uma no
+  treino e outra no teste; o modelo reconhece o fago, acerta, e a métrica
+  medida vira ficção.
+</p>
+
+<pre><code>from sklearn.model_selection import GroupKFold, cross_validate
+
+scores = cross_validate(
+    model, X, y,
+    groups=genome_ids,                      # &lt;- o que torna a métrica honesta
+    cv=GroupKFold(n_splits=5),
+    scoring=("roc_auc", "precision", "recall"),
+)</code></pre>
+
+<p>
+  É a crítica que mais aparece em banca, e a mais justa. Um AUC de 0,98 obtido
+  sem agrupamento não quer dizer nada.
+</p>
+
+<h3>Embeddings de modelos de linguagem de proteína</h3>
+
+<p>
+  Opcionalmente, cada sequência pode ser representada por um vetor de um modelo
+  de linguagem de proteína (ESM-2, pesos abertos). Esses vetores capturam
+  semelhança funcional mesmo quando não há semelhança de sequência — que é
+  exatamente o regime deste problema.
+</p>
+
+<p>
+  O custo é real: alguns gigabytes de pesos e, de preferência, uma GPU. Por
+  isso é opcional. Para a maioria dos conjuntos, os onze atributos
+  físico-químicos já separam bem, e têm a vantagem enorme de serem
+  interpretáveis.
+</p>
+
+<h2>Camada 3 — interpretação</h2>
+
+<h3>O relatório determinístico</h3>
+
+<p>
+  Para cada candidato, o pipeline monta um texto a partir dos números que ele
+  mesmo calculou: o que foi medido, qual critério passou, onde está fraco e
+  qual seria o próximo passo experimental. Roda offline e é reprodutível —
+  rodar duas vezes dá exatamente o mesmo texto.
+</p>
+
+<pre><code>## fago_exemplo_orf0003
+
+Candidato forte. Proteína de 63 aminoácidos com 3 hélices transmembrana
+preditas, hidrofobicidade global de +0,93 e cauda C-terminal de carga +3,
+situada no mesmo módulo genômico de uma provável hidrolase de parede
+celular. O conjunto reproduz a assinatura canônica de holina.
+
+**Evidências**
+- comprimento — atende: observado 63, esperado 50–150 aminoácidos. [...]
+- domínios transmembrana — atende: observado 3, esperado 1–4 hélices. [...]
+- endolisina vizinha — atende: g_orf0005 a 320 pb. [...]
+
+**Ressalvas**
+- As hélices transmembrana vêm de hidropatia de Kyte-Doolittle. Confirme
+  com um preditor dedicado antes de qualquer conclusão.
+- A predição não distingue holina de antiholina, nem determina a classe
+  topológica.
+
+**Próximo passo experimental**
+- Rodar DeepTMHMM ou Phobius para confirmar a topologia predita.
+- Predizer a estrutura e buscar parentes estruturais com Foldseek.</code></pre>
+
+<h3>A redação em prosa, opcional</h3>
+
+<p>
+  Além do relatório acima, um modelo de linguagem pode escrever a leitura do
+  conjunto. Ele recebe apenas os números já calculados, com instrução
+  explícita de não inventar medidas, acessos ou referências — e o relatório
+  principal não depende dele: se o provedor falhar, o pipeline segue e anota o
+  motivo.
+</p>
+
+<p>Três opções de configuração, no arquivo <code>.env</code>:</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>LLM_PROVIDER</th><th>O que faz</th><th>Quando usar</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>none</code></td>
+      <td>Desliga a camada. Só o relatório determinístico.</td>
+      <td>Padrão. Suficiente para a maioria dos usos.</td>
+    </tr>
+    <tr>
+      <td><code>anthropic</code></td>
+      <td>Usa a API da Anthropic.</td>
+      <td>Quando se quer a melhor qualidade de redação técnica.</td>
+    </tr>
+    <tr>
+      <td><code>openai_compatible</code></td>
+      <td>Qualquer endpoint <code>/chat/completions</code>.</td>
+      <td>Outro serviço comercial, ou um modelo aberto servido localmente por Ollama, vLLM ou llama.cpp — útil quando os dados não podem sair da instituição.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code># .env
+LLM_PROVIDER=openai_compatible
+LLM_API_BASE=http://localhost:11434/v1
+LLM_MODEL=seu-modelo-local</code></pre>
+
+<p>
+  Acrescentar um quarto provedor é escrever uma função e registrá-la num
+  dicionário — cerca de vinte linhas em <code>llm.py</code>.
+</p>
+
+<h2>O que esta arquitetura evita</h2>
+
+<div class="grid two">
+  <div class="card">
+    <h3>Número inventado</h3>
+    <p>
+      Nenhuma medida sai de um modelo de linguagem. GRAVY, carga, número de
+      hélices e distância até a endolisina são todos computados em Python, e o
+      modelo só vê o resultado.
+    </p>
+  </div>
+  <div class="card">
+    <h3>Resultado irreprodutível</h3>
+    <p>
+      A nota e o veredito de um candidato são função determinística da
+      sequência e dos limiares do <code>.env</code>. Rodar amanhã dá o mesmo
+      resultado de hoje.
+    </p>
+  </div>
+  <div class="card">
+    <h3>Métrica inflada</h3>
+    <p>
+      Validação agrupada por genoma, e um aviso explícito quando o conjunto
+      rotulado é pequeno ou desequilibrado demais para que a métrica signifique
+      alguma coisa.
+    </p>
+  </div>
+  <div class="card">
+    <h3>Dependência de fornecedor</h3>
+    <p>
+      O pipeline inteiro roda sem nenhuma API externa. A camada de prosa é
+      acessório, e aceita um modelo aberto rodando na sua própria máquina.
+    </p>
+  </div>
+</div>
+
+<div class="callout warn">
+  <p>
+    Nem a regra, nem o classificador, nem o modelo de linguagem transformam uma
+    predição em descoberta. O que a camada de IA faz é <strong>decidir a ordem
+    da fila</strong> — e isso já muda o custo da pesquisa em uma ou duas ordens
+    de magnitude.
+  </p>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p><strong>HolinSeek</strong> — descoberta computacional de holinas em genomas de bacteriófago.</p>
+      <p class="note">A camada de prosa é opcional e vem desligada.</p>
+    </div>
+    <div>
+      <p>Deraldo Duran — UFC</p>
+      <p>Igor Alves — Especialista em Bioinformática, UQAM</p>
+      <p><a href="https://github.com/igoralves1/holinseek">github.com/igoralves1/holinseek</a> · licença MIT</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

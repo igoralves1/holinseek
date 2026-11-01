@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "holinseek"
+version = "0.1.0"
+description = "Descoberta computacional de holinas em genomas de bacteriófago"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Deraldo Duran" },
+    { name = "Igor Alves" },
+]
+keywords = ["bioinformatics", "bacteriophage", "holin", "membrane-protein", "genomics"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+
+dependencies = [
+    "biopython>=1.83",
+    "requests>=2.31",
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scikit-learn>=1.4",
+    "scipy>=1.11",
+    "typer>=0.12",
+    "rich>=13.7",
+    "python-dotenv>=1.0",
+    "PyYAML>=6.0",
+    "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+genes = ["pyrodigal>=3.3"]
+domains = ["pyhmmer>=0.10"]
+embeddings = ["torch>=2.2", "transformers>=4.40", "umap-learn>=0.5"]
+prose = ["anthropic>=0.49"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+holinseek = "holinseek.cli:app"
+
+[project.urls]
+Homepage = "https://igoralves1.github.io/holinseek/"
+Repository = "https://github.com/igoralves1/holinseek"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

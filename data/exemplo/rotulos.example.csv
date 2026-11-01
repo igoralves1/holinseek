@@ -1,0 +1,18 @@
+protein_id,label,fonte
+# Modelo de arquivo de rótulos para `holinseek train`.
+#
+# label: 1 = holina confirmada, 0 = não é holina
+# fonte: de onde veio a confirmação — artigo, acesso em banco, experimento próprio
+#
+# Este arquivo vem VAZIO de propósito. Preencha com casos que você mesmo
+# verificou. Herdar um conjunto de treino sem auditar cada entrada é a forma
+# mais rápida de o classificador aprender a base de dados em vez da biologia.
+#
+# Mínimo para que a validação cruzada diga alguma coisa: 10 exemplos, de
+# pelo menos 2 genomas diferentes. Ideal: dezenas, de muitos fagos distintos,
+# com negativos que sejam proteínas de membrana de outras funções — e não
+# apenas proteínas solúveis, que são fáceis demais de separar.
+#
+# Exemplo de preenchimento (apague estas linhas):
+# NC_000000_orf0012,1,artigo de caracterizacao
+# NC_000000_orf0031,0,transportador anotado

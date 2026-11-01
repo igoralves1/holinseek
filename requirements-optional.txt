@@ -1,0 +1,27 @@
+# HolinSeek — dependências opcionais.
+# O pipeline roda inteiro sem nenhuma delas: cada uma apenas substitui uma
+# implementação interna por uma ferramenta mais precisa ou mais rápida.
+#
+#   pip install -r requirements-optional.txt
+#
+# Algumas compilam extensões em C e podem não ter wheel para a versão de
+# Python mais recente. Instale uma a uma se alguma falhar — nada aqui é
+# obrigatório.
+
+# --- Predição de genes ---------------------------------------------------
+# Substitui o localizador de ORFs interno por Prodigal (modo viral).
+pyrodigal>=3.3
+
+# --- Perfis de domínio ---------------------------------------------------
+# Busca HMMER contra Pfam/PHROG sem precisar do binário do HMMER.
+pyhmmer>=0.10
+
+# --- Modelos de linguagem de proteína (embeddings) -----------------------
+# Pesos abertos, baixados do Hugging Face na primeira execução (~2,5 GB).
+# Só é necessário para `holinseek embed` e para o classificador que usa
+# embeddings em vez de atributos físico-químicos.
+torch>=2.2
+transformers>=4.40
+
+# --- Redução de dimensionalidade para as figuras -------------------------
+umap-learn>=0.5

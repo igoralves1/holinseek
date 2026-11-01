@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dados e artigos — HolinSeek</title>
+<meta name="description" content="Bancos de dados genéticos do NCBI e outros, arquivos FASTA de vírus e bacteriófagos, bases de domínio e estrutura, e a literatura científica que embasa o estudo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">Holin<span>Seek</span></a>
+    <nav class="main">
+      <a href="index.html">O estudo</a>
+      <a href="ciencia.html">A ciência</a>
+      <a href="pipeline.html">Pipeline</a>
+      <a href="dados.html">Dados e artigos</a>
+      <a href="ia.html">Camada de IA</a>
+      <a href="negocio.html">Viabilidade</a>
+      <a href="downloads.html">Downloads</a>
+    </nav>
+    <button class="theme-toggle" type="button">escuro</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Fontes primárias</p>
+  <h1>Dados genéticos e literatura</h1>
+  <p class="lead">
+    Tudo que o pipeline consome vem de bases públicas, baixado na hora da
+    fonte primária. Esta página reúne de onde vêm os genomas, onde estão os
+    arquivos FASTA de vírus e bacteriófagos, e a literatura que embasa cada
+    decisão do método.
+  </p>
+</section>
+
+<h2>NCBI — genomas e sequências</h2>
+
+<ul class="linklist">
+  <li>
+    <a href="https://www.ncbi.nlm.nih.gov/labs/virus/vssi/">NCBI Virus</a>
+    <span class="meta">interface de busca</span>
+    <span class="desc">
+      O portal dedicado a genomas virais. Permite filtrar por hospedeiro,
+      família, completude e data, e baixar o conjunto resultante em FASTA ou
+      GenBank. É o melhor ponto de partida para montar um conjunto de fagos.
+    </span>
+  </li>
+  <li>
+    <a href="https://ftp.ncbi.nlm.nih.gov/refseq/release/viral/">RefSeq viral — arquivos FASTA</a>
+    <span class="meta">FTP · download direto</span>
+    <span class="desc">
+      Os arquivos FASTA de todo o RefSeq viral, em lotes
+      (<code>viral.N.1.genomic.fna.gz</code> para genomas,
+      <code>viral.N.protein.faa.gz</code> para proteínas). É a forma mais
+      rápida de obter o conjunto inteiro de uma vez, sem passar por consultas.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.ncbi.nlm.nih.gov/nuccore">NCBI Nucleotide</a>
+    <span class="meta">nuccore</span>
+    <span class="desc">
+      A base geral de sequências de nucleotídeos. É o banco que o comando
+      <code>holinseek fetch</code> consulta por padrão.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.ncbi.nlm.nih.gov/protein">NCBI Protein</a>
+    <span class="desc">
+      Sequências de proteína, incluindo as traduções anotadas dos genomas de
+      fago. Útil para recuperar holinas já anotadas como ponto de comparação.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=Caudoviricetes">Taxonomia — Caudoviricetes</a>
+    <span class="desc">
+      A classe que reúne os bacteriófagos de cauda, onde está a maior parte dos
+      genomas de interesse. Útil para montar o termo de busca por organismo.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.ncbi.nlm.nih.gov/books/NBK25501/">E-utilities — documentação</a>
+    <span class="meta">API</span>
+    <span class="desc">
+      O manual da interface programática do NCBI. Define as regras que o
+      pipeline respeita: identificação por e-mail e limite de três requisições
+      por segundo, ou dez com chave de API.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.ncbi.nlm.nih.gov/datasets/">NCBI Datasets</a>
+    <span class="meta">CLI e API</span>
+    <span class="desc">
+      Alternativa moderna às E-utilities para download em massa, com cliente de
+      linha de comando próprio.
+    </span>
+  </li>
+  <li>
+    <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST</a>
+    <span class="desc">
+      Busca por similaridade. Encontra pouco para holinas — esse é o ponto do
+      estudo — mas é indispensável para identificar as endolisinas vizinhas.
+    </span>
+  </li>
+</ul>
+
+<div class="callout">
+  <p>
+    <strong>Consulta pronta.</strong> O termo que o pipeline usa por padrão
+    para genomas completos de fago curados:
+  </p>
+  <pre><code>"Caudoviricetes"[Organism] AND srcdb_refseq[PROP]
+AND ("complete genome"[Title] OR "complete sequence"[Title])</code></pre>
+  <p>
+    Rode <code>holinseek fetch --list</code> para ver as outras consultas
+    prontas (por hospedeiro: <em>E. coli</em>, <em>Staphylococcus</em>,
+    <em>Salmonella</em>).
+  </p>
+</div>
+
+<h2>Bases especializadas em bacteriófagos</h2>
+
+<ul class="linklist">
+  <li>
+    <a href="https://github.com/RyanCook94/inphared">INPHARED</a>
+    <span class="meta">atualização mensal</span>
+    <span class="desc">
+      <em>INfrastructure for a PHAge REference Database.</em> Um conjunto
+      curado de genomas de fago, deduplicado e com metadados consistentes,
+      publicado todo mês. Resolve vários vieses do conjunto bruto do GenBank.
+    </span>
+  </li>
+  <li>
+    <a href="https://millardlab.org/phage-genomes/">Millard Lab — Phage Genomes</a>
+    <span class="desc">
+      A página que distribui os conjuntos do INPHARED, com os arquivos prontos
+      para download.
+    </span>
+  </li>
+  <li>
+    <a href="https://phrogs.lmge.uca.fr/">PHROG</a>
+    <span class="meta">perfis HMM</span>
+    <span class="desc">
+      <em>Prokaryotic Virus Remote Homologous Groups.</em> Famílias de
+      proteínas de vírus procarióticos agrupadas por homologia remota — muito
+      mais sensível que o Pfam para proteínas de fago, incluindo as do módulo
+      de lise.
+    </span>
+  </li>
+  <li>
+    <a href="https://img.jgi.doe.gov/vr/">IMG/VR</a>
+    <span class="meta">metagenomas</span>
+    <span class="desc">
+      Genomas virais recuperados de metagenomas. Amplia o espaço de busca em
+      ordens de magnitude além dos fagos cultivados.
+    </span>
+  </li>
+  <li>
+    <a href="https://phagesdb.org/">PhagesDB</a>
+    <span class="desc">
+      Base do programa SEA-PHAGES, com milhares de fagos de actinobactérias
+      isolados e sequenciados por estudantes, com anotação manual.
+    </span>
+  </li>
+  <li>
+    <a href="https://phagescope.deepomics.org/">PhageScope</a>
+    <span class="desc">
+      Portal com genomas de fago já anotados, incluindo predição de proteínas
+      estruturais e do ciclo de vida.
+    </span>
+  </li>
+  <li>
+    <a href="https://github.com/gbouras13/pharokka">Pharokka</a>
+    <span class="meta">ferramenta</span>
+    <span class="desc">
+      Anotador rápido de genomas de fago. Útil para obter, de uma vez, a
+      anotação funcional da vizinhança de cada candidato.
+    </span>
+  </li>
+</ul>
+
+<h2>Domínios, famílias e estrutura</h2>
+
+<ul class="linklist">
+  <li>
+    <a href="https://www.tcdb.org/browse.php?tc=1.E">TCDB — classe 1.E, holinas</a>
+    <span class="meta">classificação dedicada</span>
+    <span class="desc">
+      O <em>Transporter Classification Database</em> mantém a classificação de
+      referência das famílias de holina, sob a classe 1.E. É o recurso mais
+      direto para entender quantas famílias distintas existem e o quão pouco
+      elas se parecem entre si.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.ebi.ac.uk/interpro/">InterPro / Pfam</a>
+    <span class="desc">
+      Perfis de domínio proteico. Inclui várias famílias de holina e,
+      sobretudo, as famílias de hidrolase de peptidoglicano usadas para
+      identificar as endolisinas vizinhas.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.uniprot.org/">UniProt</a>
+    <span class="desc">
+      Sequências de proteína com anotação curada. Fonte para montar um
+      conjunto de holinas caracterizadas experimentalmente — o ponto de partida
+      honesto para rotular dados de treino.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.ebi.ac.uk/Tools/hmmer/">HMMER web server</a>
+    <span class="desc">
+      Busca por perfil HMM sem instalação local. A versão de linha de comando
+      entra no pipeline pela biblioteca <code>pyhmmer</code>.
+    </span>
+  </li>
+  <li>
+    <a href="https://alphafold.ebi.ac.uk/">AlphaFold Protein Structure Database</a>
+    <span class="desc">
+      Estruturas preditas em escala de proteoma. Proteínas de membrana são as
+      mais difíceis de predizer, então confira sempre o escore de confiança por
+      resíduo antes de concluir qualquer coisa.
+    </span>
+  </li>
+  <li>
+    <a href="https://search.foldseek.com/search">Foldseek</a>
+    <span class="desc">
+      Busca estrutural rápida. É a ferramenta certa para este problema:
+      holinas divergem muito em sequência e bem menos em forma.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.rcsb.org/">RCSB PDB</a>
+    <span class="desc">
+      Estruturas determinadas experimentalmente, para validar as predições.
+    </span>
+  </li>
+</ul>
+
+<h2>Ferramentas de análise</h2>
+
+<ul class="linklist">
+  <li>
+    <a href="https://dtu.biolib.com/DeepTMHMM">DeepTMHMM</a>
+    <span class="desc">
+      Preditor de topologia de membrana baseado em aprendizado profundo.
+      É com ele que se confirma a heurística de hidropatia usada na triagem.
+    </span>
+  </li>
+  <li>
+    <a href="https://phobius.sbc.su.se/">Phobius</a>
+    <span class="desc">
+      Prediz simultaneamente hélices transmembrana e peptídeo-sinal, o que
+      evita o erro clássico de confundir um sinal de secreção com uma hélice.
+    </span>
+  </li>
+  <li>
+    <a href="https://web.expasy.org/protparam/">ExPASy ProtParam</a>
+    <span class="desc">
+      Calcula GRAVY, ponto isoelétrico e composição. Útil para conferir
+      manualmente os números que o pipeline produz.
+    </span>
+  </li>
+  <li>
+    <a href="https://github.com/hyattpd/Prodigal">Prodigal</a>
+    <span class="desc">
+      Predição de genes procarióticos. Entra no pipeline pela ligação Python
+      <code>pyrodigal</code>, sem precisar do binário.
+    </span>
+  </li>
+  <li>
+    <a href="https://github.com/deprekate/PHANOTATE">PHANOTATE</a>
+    <span class="desc">
+      Preditor de genes desenhado especificamente para genomas de fago, que são
+      densos e cheios de fases sobrepostas.
+    </span>
+  </li>
+  <li>
+    <a href="https://github.com/sokrypton/ColabFold">ColabFold</a>
+    <span class="desc">
+      Predição de estrutura acessível, sem infraestrutura própria.
+    </span>
+  </li>
+  <li>
+    <a href="https://www.nextflow.io/">Nextflow</a> e
+    <a href="https://nf-co.re/">nf-core</a>
+    <span class="desc">
+      Orquestração de fluxos de bioinformática com contêineres, retomada e
+      registro de proveniência.
+    </span>
+  </li>
+</ul>
+
+<h2>Literatura</h2>
+
+<p class="note">
+  Cada link abre o registro correspondente no PubMed, buscado pelo título
+  exato. Os artigos de 1 a 5 cobrem a biologia das holinas; de 6 a 9, os
+  métodos computacionais; de 10 a 12, os recursos de dados.
+</p>
+
+<h3>Biologia das holinas e da lise</h3>
+
+<ol class="linklist">
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Holins%3A+form+and+function+in+bacteriophage+lysis%22">
+      Young R., Bläsi U. — <em>Holins: form and function in bacteriophage lysis</em>
+    </a>
+    <span class="meta">FEMS Microbiol Rev · 1995</span>
+    <span class="desc">
+      A revisão fundadora. Estabelece o conceito de holina como temporizador da
+      lise e descreve o mecanismo de acionamento.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Holins%3A+the+protein+clocks+of+bacteriophage+infections%22">
+      Wang I.-N., Smith D. L., Young R. — <em>Holins: the protein clocks of bacteriophage infections</em>
+    </a>
+    <span class="meta">Annu Rev Microbiol · 2000</span>
+    <span class="desc">
+      Onde a metáfora do relógio é desenvolvida em detalhe, com a relação entre
+      o momento da lise e o tamanho da progênie viral.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Phage+lysis%3A+three+steps%2C+three+choices%2C+one+outcome%22">
+      Young R. — <em>Phage lysis: three steps, three choices, one outcome</em>
+    </a>
+    <span class="meta">J Microbiol · 2014</span>
+    <span class="desc">
+      Síntese moderna do cassete de lise completo: holina, endolisina e
+      spanina, e as variantes de cada um.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Holins+in+bacteria%2C+eukaryotes%2C+and+archaea%22">
+      Saier M. H., Reddy B. L. — <em>Holins in bacteria, eukaryotes, and archaea</em>
+    </a>
+    <span class="meta">J Bacteriol · 2015</span>
+    <span class="desc">
+      O levantamento que mostra a amplitude do problema: dezenas de famílias
+      sem homologia reconhecível entre si. É a justificativa direta da
+      abordagem por propriedades físico-químicas.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Bacteriophage-encoded+lethal+membrane+disruptors%22">
+      Abeysekera G. S. <em>et al.</em> — <em>Bacteriophage-encoded lethal membrane disruptors</em>
+    </a>
+    <span class="meta">Front Microbiol · 2022</span>
+    <span class="desc">
+      Revisão recente, com ênfase nas aplicações biotecnológicas e
+      terapêuticas das proteínas líticas de fago.
+    </span>
+  </li>
+</ol>
+
+<h3>Métodos computacionais</h3>
+
+<ol class="linklist" start="6">
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22A+simple+method+for+displaying+the+hydropathic+character+of+a+protein%22">
+      Kyte J., Doolittle R. F. — <em>A simple method for displaying the hydropathic character of a protein</em>
+    </a>
+    <span class="meta">J Mol Biol · 1982</span>
+    <span class="desc">
+      A escala de hidropatia e a janela deslizante. É literalmente o algoritmo
+      implementado em <code>biophysics.py</code>.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22The+distribution+of+positively+charged+residues+in+bacterial+inner+membrane+proteins%22">
+      von Heijne G. — <em>The distribution of positively charged residues in bacterial inner membrane proteins</em>
+    </a>
+    <span class="meta">EMBO J · 1986</span>
+    <span class="desc">
+      A regra do interior positivo. Origem do critério de carga da cauda
+      C-terminal.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22DeepTMHMM+predicts+alpha+and+beta+transmembrane+proteins%22">
+      Hallgren J. <em>et al.</em> — <em>DeepTMHMM predicts alpha and beta transmembrane proteins using deep neural networks</em>
+    </a>
+    <span class="meta">preprint · 2022</span>
+    <span class="desc">
+      O preditor de topologia recomendado para confirmar a heurística da
+      triagem.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Fast+and+accurate+protein+structure+search+with+Foldseek%22">
+      van Kempen M. <em>et al.</em> — <em>Fast and accurate protein structure search with Foldseek</em>
+    </a>
+    <span class="meta">Nat Biotechnol · 2024</span>
+    <span class="desc">
+      Busca estrutural em escala. O caminho para achar parentesco onde a
+      sequência não mostra nenhum.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22Evolutionary-scale+prediction+of+atomic-level+protein+structure+with+a+language+model%22">
+      Lin Z. <em>et al.</em> — <em>Evolutionary-scale prediction of atomic-level protein structure with a language model</em>
+    </a>
+    <span class="meta">Science · 2023</span>
+    <span class="desc">
+      O modelo de linguagem de proteína ESM-2, base dos embeddings usados na
+      etapa de aprendizado de máquina.
+    </span>
+  </li>
+</ol>
+
+<h3>Recursos de dados</h3>
+
+<ol class="linklist" start="11">
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22INfrastructure+for+a+PHAge+REference+Database%22">
+      Cook R. <em>et al.</em> — <em>INfrastructure for a PHAge REference Database</em>
+    </a>
+    <span class="meta">PHAGE · 2021</span>
+    <span class="desc">
+      Descreve o INPHARED e, de passagem, documenta os vieses do conjunto bruto
+      de genomas de fago depositados — leitura obrigatória antes de treinar
+      qualquer classificador.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=%22PHROG%3A+families+of+prokaryotic+virus+proteins+clustered+using+remote+homology%22">
+      Terzian P. <em>et al.</em> — <em>PHROG: families of prokaryotic virus proteins clustered using remote homology</em>
+    </a>
+    <span class="meta">NAR Genom Bioinform · 2021</span>
+    <span class="desc">
+      A base de perfis usada para anotar proteínas de fago que o Pfam não
+      alcança.
+    </span>
+  </li>
+</ol>
+
+<h3>Contexto de saúde pública</h3>
+
+<ul class="linklist">
+  <li>
+    <a href="https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance">
+      Organização Mundial da Saúde — <em>Antimicrobial resistance</em>
+    </a>
+    <span class="meta">ficha técnica</span>
+    <span class="desc">
+      A posição oficial da OMS sobre a resistência antimicrobiana como ameaça
+      global à saúde — o enquadramento do problema que motiva o estudo.
+    </span>
+  </li>
+  <li>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=holin+bacteriophage+lysis+bioinformatics">
+      PubMed — busca aberta: <em>holin bacteriophage lysis bioinformatics</em>
+    </a>
+    <span class="desc">
+      Para acompanhar o que sai de novo na interseção dos dois temas.
+    </span>
+  </li>
+</ul>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p><strong>HolinSeek</strong> — descoberta computacional de holinas em genomas de bacteriófago.</p>
+      <p class="note">Links para bases e artigos externos; nada é redistribuído aqui.</p>
+    </div>
+    <div>
+      <p>Deraldo Duran — UFC</p>
+      <p>Igor Alves — Especialista em Bioinformática, UQAM</p>
+      <p><a href="https://github.com/igoralves1/holinseek">github.com/igoralves1/holinseek</a> · licença MIT</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

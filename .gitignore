@@ -1,0 +1,35 @@
+# Segredos e configuração local
+.env
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Dados baixados e resultados intermediários
+data/raw/*
+data/interim/*
+data/results/*
+!data/**/.gitkeep
+!data/reference/*.csv
+
+# Modelos treinados e caches de pesos
+models/
+*.joblib
+*.pt
+*.safetensors
+
+# Sistema operacional e editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A ciência — HolinSeek</title>
+<meta name="description" content="A bioquímica das holinas: lipídeos da membrana interna, peptidoglicano, força próton-motriz e as equações que traduzem essa física em números calculáveis a partir da sequência.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<script>
+window.MathJax = {
+  loader: { load: ["[tex]/mhchem"] },
+  tex: {
+    packages: { "[+]": ["mhchem"] },
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["$$", "$$"], ["\\[", "\\]"]]
+  },
+  options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/smiles-drawer@2.1.7/dist/smiles-drawer.min.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">Holin<span>Seek</span></a>
+    <nav class="main">
+      <a href="index.html">O estudo</a>
+      <a href="ciencia.html">A ciência</a>
+      <a href="pipeline.html">Pipeline</a>
+      <a href="dados.html">Dados e artigos</a>
+      <a href="ia.html">Camada de IA</a>
+      <a href="negocio.html">Viabilidade</a>
+      <a href="downloads.html">Downloads</a>
+    </nav>
+    <button class="theme-toggle" type="button">escuro</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Bioquímica e física do alvo</p>
+  <h1>A ciência por trás da busca</h1>
+  <p class="lead">
+    Toda a estratégia computacional se apoia em três camadas de química: o
+    solvente apolar que a holina atravessa, o polímero que a endolisina
+    hidrolisa e o gradiente elétrico que funciona como gatilho. Cada uma deixa
+    uma pista diferente na sequência de aminoácidos.
+  </p>
+</section>
+
+<h2>1. A membrana interna</h2>
+
+<p>
+  A membrana citoplasmática de <em>Escherichia coli</em> é uma bicamada de
+  fosfolipídeos com cerca de 4 nm de espessura. Três espécies dominam, e é a
+  cadeia de hidrocarboneto delas que cria o interior apolar — o obstáculo que
+  define a assinatura da holina.
+</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Lipídeo</th><th>Fórmula molecular</th><th>Proporção típica</th><th>Carga em pH 7</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Fosfatidiletanolamina</td><td>\(\ce{C39H76NO8P}\)</td><td>cerca de 70–80%</td><td>zwitteriônica</td></tr>
+    <tr><td>Fosfatidilglicerol</td><td>\(\ce{C40H77O10P}\)</td><td>cerca de 15–20%</td><td>negativa</td></tr>
+    <tr><td>Cardiolipina</td><td>\(\ce{C81H156O17P2}\)</td><td>poucos por cento</td><td>negativa</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="note">
+  Fórmulas das espécies predominantes na composição 16:0/18:1. A proporção
+  varia com a fase de crescimento e a temperatura.
+</p>
+
+<div class="mol-grid">
+  <div class="mol">
+    <canvas width="260" height="190" data-smiles="CCCCCCCCCCCCCCCC(=O)OC[C@H](COP(=O)(O)OCCN)OC(=O)CCCCCCC/C=C\CCCCCCCC"></canvas>
+    <div class="mol-fallback">estrutura indisponível sem conexão</div>
+    <p class="mol-name">Fosfatidiletanolamina</p>
+    <p class="mol-formula">C₃₉H₇₆NO₈P</p>
+  </div>
+  <div class="mol">
+    <canvas width="260" height="190" data-smiles="CC[C@H](C)[C@@H](C(=O)O)N"></canvas>
+    <div class="mol-fallback">estrutura indisponível sem conexão</div>
+    <p class="mol-name">Isoleucina</p>
+    <p class="mol-formula">C₆H₁₃NO₂ · hidropatia +4,5</p>
+  </div>
+  <div class="mol">
+    <canvas width="260" height="190" data-smiles="N[C@@H](CCCNC(=N)N)C(=O)O"></canvas>
+    <div class="mol-fallback">estrutura indisponível sem conexão</div>
+    <p class="mol-name">Arginina</p>
+    <p class="mol-formula">C₆H₁₄N₄O₂ · hidropatia −4,5</p>
+  </div>
+</div>
+
+<p>
+  Os dois aminoácidos acima são os extremos da escala de hidropatia, e explicam
+  a lógica inteira da busca. A isoleucina, apolar e ramificada, é estável no
+  interior da bicamada. A arginina, com seu grupo guanidínio carregado, só é
+  estável em água. Uma hélice que atravessa a membrana é feita de isoleucinas,
+  leucinas e valinas; a cauda que fica no citoplasma concentra argininas e
+  lisinas.
+</p>
+
+<h3>O custo energético da inserção</h3>
+
+<p>
+  Transferir um resíduo da água para o interior da bicamada tem um custo em
+  energia livre. Para a hélice inteira:
+</p>
+
+<div class="formula">
+  $$\Delta G_{\text{inserção}} = \sum_{i=1}^{n} \Delta G_i^{\text{transf}} \;+\; \Delta G^{\text{conformacional}}$$
+  <p class="caption">
+    A inserção espontânea exige \(\Delta G_{\text{inserção}} < 0\), o que só
+    acontece com um trecho suficientemente apolar. É essa desigualdade que o
+    perfil de hidropatia aproxima de forma barata.
+  </p>
+</div>
+
+<h2>2. A parede de peptidoglicano</h2>
+
+<p>
+  Por fora da membrana interna está o saco de peptidoglicano, o polímero que
+  dá forma à célula e resiste à pressão de turgor. É o substrato da
+  endolisina — e o motivo pelo qual a holina precisa existir: a endolisina é
+  sintetizada no citoplasma e não atravessa a membrana sozinha.
+</p>
+
+<div class="formula">
+  $$\ce{[\,GlcNAc -> MurNAc\,]_n}$$
+  <p class="caption">
+    Cadeia glicana alternada, unida por ligações \(\beta\text{-}1{,}4\).
+    GlcNAc: \(\ce{C8H15NO6}\) · MurNAc: \(\ce{C11H19NO8}\)
+  </p>
+</div>
+
+<div class="mol-grid">
+  <div class="mol">
+    <canvas width="260" height="190" data-smiles="CC(=O)N[C@@H]1[C@@H](O)[C@H](O)[C@@H](CO)O[C@@H]1O"></canvas>
+    <div class="mol-fallback">estrutura indisponível sem conexão</div>
+    <p class="mol-name">N-acetilglicosamina (GlcNAc)</p>
+    <p class="mol-formula">C₈H₁₅NO₆</p>
+  </div>
+  <div class="mol">
+    <canvas width="260" height="190" data-smiles="CC(=O)N[C@@H]1[C@@H](O[C@@H](C)C(=O)O)[C@H](O)[C@@H](CO)O[C@@H]1O"></canvas>
+    <div class="mol-fallback">estrutura indisponível sem conexão</div>
+    <p class="mol-name">Ácido N-acetilmurâmico (MurNAc)</p>
+    <p class="mol-formula">C₁₁H₁₉NO₈</p>
+  </div>
+  <div class="mol">
+    <canvas width="260" height="190" data-smiles="C[C@@H](C(=O)O)N"></canvas>
+    <div class="mol-fallback">estrutura indisponível sem conexão</div>
+    <p class="mol-name">L-alanina</p>
+    <p class="mol-formula">C₃H₇NO₂ · primeiro resíduo da haste</p>
+  </div>
+</div>
+
+<p class="note">
+  Desenhos 2D esquemáticos, gerados a partir de SMILES. A conformação real em
+  solução e a estereoquímica completa do polímero não estão representadas.
+</p>
+
+<p>
+  Do MurNAc pende o <strong>pentapeptídeo haste</strong>, que em bactérias
+  Gram-negativas tem a composição:
+</p>
+
+<div class="formula">
+  $$\text{L-Ala} \rightarrow \text{D-Glu} \rightarrow \textit{meso}\text{-DAP} \rightarrow \text{D-Ala} \rightarrow \text{D-Ala}$$
+  <p class="caption">
+    As ligações cruzadas entre hastes de cadeias vizinhas é que transformam o
+    polímero numa malha contínua. A presença de aminoácidos na forma D é uma
+    defesa contra proteases comuns.
+  </p>
+</div>
+
+<h3>A reação que a endolisina catalisa</h3>
+
+<p>
+  Conforme a classe da enzima, o ponto de clivagem muda. As duas mais comuns
+  em endolisinas de fago:
+</p>
+
+<div class="formula">
+  $$\ce{MurNAc-GlcNAc + H2O ->[\text{muramidase}] MurNAc-OH + GlcNAc}$$
+  <p class="caption">
+    Muramidase (lisozima): hidrólise da ligação glicosídica \(\beta\text{-}1{,}4\)
+    da cadeia glicana.
+  </p>
+</div>
+
+<div class="formula">
+  $$\ce{MurNAc-L-Ala + H2O ->[\text{amidase}] MurNAc + L-Ala}$$
+  <p class="caption">
+    N-acetilmuramoil-L-alanina amidase: hidrólise da ligação amida entre a
+    cadeia glicana e o peptídeo haste.
+  </p>
+</div>
+
+<p>
+  Rompida a malha, a pressão de turgor — da ordem de algumas atmosferas —
+  faz o resto.
+</p>
+
+<h2>3. O gatilho: a força próton-motriz</h2>
+
+<p>
+  Aqui está o ponto que distingue a holina de qualquer enzima. Ela não cliva
+  nada. O que ela faz é <strong>despolarizar</strong>. A membrana interna
+  sustenta um gradiente eletroquímico de prótons, a força próton-motriz:
+</p>
+
+<div class="formula">
+  $$\Delta p = \Delta\psi - \frac{2{,}303\,RT}{F}\,\Delta\mathrm{pH}$$
+  <p class="caption">
+    \(\Delta\psi\) é o potencial elétrico transmembrana e \(\Delta\mathrm{pH}\)
+    a diferença de pH entre os dois lados. \(R\) é a constante dos gases,
+    \(T\) a temperatura absoluta e \(F\) a constante de Faraday.
+  </p>
+</div>
+
+<p>
+  A 25 °C o termo de pH assume um valor conveniente, e a equação vira a forma
+  usada na prática:
+</p>
+
+<div class="formula">
+  $$\Delta p \approx \Delta\psi - 59 \cdot \Delta\mathrm{pH} \qquad [\mathrm{mV}]$$
+  <p class="caption">
+    Em <em>E. coli</em> em crescimento, \(\Delta\psi\) fica tipicamente entre
+    \(-120\) e \(-160\) mV, com o interior negativo.
+  </p>
+</div>
+
+<h3>O relógio molecular</h3>
+
+<p>
+  As holinas se acumulam na membrana ao longo da infecção sem fazer nada. Em
+  um instante determinado — reprodutível ao minuto para um dado fago — elas se
+  agregam e o poro se abre, colapsando \(\Delta\psi\). Esse é o
+  <em>triggering</em>, e é o que faz da holina um temporizador.
+</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>#</th><th>Evento</th><th>Química envolvida</th><th>Observável experimental</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>Expressão do cassete</td><td>transcrição tardia do fago</td><td>RNA-seq tardio</td></tr>
+    <tr><td>2</td><td>Inserção na bicamada</td><td>particionamento apolar, \(\Delta G < 0\)</td><td>hidrofobicidade da sequência</td></tr>
+    <tr><td>3</td><td>Oligomerização</td><td>interações hélice–hélice; nenhuma ligação covalente rompida</td><td>microscopia de fluorescência</td></tr>
+    <tr><td>4</td><td><strong>Acionamento</strong></td><td>colapso de \(\Delta\psi\) ao atingir a concentração crítica</td><td>potencial de membrana</td></tr>
+    <tr><td>5</td><td>Formação do poro</td><td>abertura de canal permeável a proteínas</td><td>queda de \(\ce{OD600}\)</td></tr>
+    <tr><td>6</td><td>Hidrólise da parede</td><td>endolisina cliva \(\beta\text{-}1{,}4\)</td><td>zimograma, muropeptídeos</td></tr>
+    <tr><td>7</td><td>Lise e liberação</td><td>turgor rompe o envelope enfraquecido</td><td>contagem de placas (PFU)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <p>
+    A etapa 4 é a razão de existir da holina. Atrasá-la ou adiantá-la muda o
+    tamanho da progênie viral — e é justamente o parâmetro que interessa
+    manipular em engenharia de fagos terapêuticos.
+  </p>
+</div>
+
+<h2>4. Da física para o número calculável</h2>
+
+<p>
+  Esta é a tradução que torna o projeto possível. Cada restrição física da
+  seção anterior vira uma quantidade que se calcula a partir da sequência de
+  aminoácidos, sem alinhar com nada.
+</p>
+
+<h3>Hidrofobicidade média — GRAVY</h3>
+
+<div class="formula">
+  $$\mathrm{GRAVY} = \frac{1}{n}\sum_{i=1}^{n} h_i$$
+  <p class="caption">
+    \(h_i\) é o valor de hidropatia do resíduo \(i\) na escala de
+    Kyte-Doolittle. Holinas típicas ficam acima de \(+0{,}4\).
+  </p>
+</div>
+
+<h3>Perfil de janela deslizante</h3>
+
+<div class="formula">
+  $$\bar{h}(j) = \frac{1}{w}\sum_{i=j}^{\,j+w-1} h_i \qquad w = 19$$
+  <p class="caption">
+    A janela de 19 resíduos não é arbitrária: é aproximadamente o número de
+    aminoácidos de uma hélice \(\alpha\) necessária para cruzar os 4 nm da
+    bicamada. Toda janela com \(\bar{h} \geq 1{,}6\) é candidata a hélice
+    transmembrana.
+  </p>
+</div>
+
+<h3>Regra do interior positivo</h3>
+
+<div class="formula">
+  $$q = n_{\text{Lys}} + n_{\text{Arg}} - n_{\text{Asp}} - n_{\text{Glu}}$$
+  <p class="caption">
+    Calculada sobre a cauda C-terminal, depois da última hélice. Resíduos
+    positivos se acumulam do lado citoplasmático, e essa assimetria orienta a
+    proteína na membrana. É um dos critérios mais discriminantes do conjunto.
+  </p>
+</div>
+
+<h3>Carga líquida em função do pH</h3>
+
+<div class="formula">
+  $$Z(\mathrm{pH}) = \sum_{b}\frac{1}{1 + 10^{\,\mathrm{pH} - \mathrm{p}K_a^{(b)}}} \;-\; \sum_{a}\frac{1}{1 + 10^{\,\mathrm{p}K_a^{(a)} - \mathrm{pH}}}$$
+  <p class="caption">
+    Henderson-Hasselbalch somada sobre todos os grupos ionizáveis. O ponto
+    isoelétrico é o pH em que \(Z = 0\), obtido por busca binária no código.
+  </p>
+</div>
+
+<h2>5. O que a sequência não diz</h2>
+
+<p>
+  Vale ser explícito sobre os limites desta abordagem, porque eles são reais:
+</p>
+
+<ul>
+  <li>
+    O perfil de hidropatia prediz <em>onde</em> há trecho hidrofóbico, não a
+    topologia completa — qual extremidade fica dentro e qual fica fora exige
+    um preditor treinado ou um experimento.
+  </li>
+  <li>
+    Holina e antiholina são frequentemente o mesmo produto gênico com dois
+    códons de início. A sequência sozinha não distingue as duas.
+  </li>
+  <li>
+    A classe topológica (I, II ou III) e a estequiometria do poro não saem do
+    cálculo.
+  </li>
+  <li>
+    Proteínas de membrana são justamente as mais difíceis de predizer
+    estruturalmente, então a etapa de dobramento ajuda menos aqui do que
+    ajudaria em uma proteína solúvel.
+  </li>
+</ul>
+
+<div class="callout warn">
+  <p>
+    Nada disso invalida a triagem — apenas define o que ela é. O pipeline
+    entrega <strong>candidatos priorizados</strong>, não identificações. A
+    confirmação é experimental, sempre.
+  </p>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p><strong>HolinSeek</strong> — descoberta computacional de holinas em genomas de bacteriófago.</p>
+      <p class="note">Equações renderizadas com MathJax e mhchem; estruturas 2D com SmilesDrawer.</p>
+    </div>
+    <div>
+      <p>Deraldo Duran — UFC</p>
+      <p>Igor Alves — Especialista em Bioinformática, UQAM</p>
+      <p><a href="https://github.com/igoralves1/holinseek">github.com/igoralves1/holinseek</a> · licença MIT</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
